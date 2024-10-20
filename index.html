@@ -141,37 +141,53 @@
             display: none; /* إخفاء الرسالة بشكل افتراضي */
         }
 
-        .check-button-active {
-            background-color: #58CC02;
-            color: white;
-            border: none;
-            border-radius: 15px;
-            padding: 8px 180px;
-            cursor: pointer;
-            font-size: 18px;
-            position: fixed;
-            bottom: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            box-shadow: 0 4px 0 #58A700;
-            transition: all 0.3s ease;
-            outline: none;
-            -webkit-tap-highlight-color: transparent;
-            white-space: nowrap; /* منع النص من الانتقال إلى سطر جديد */
-        }
+        .check-button-container {
+    position: fixed;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+}
 
-        .check-button-active:active {
-            box-shadow: 0 4px 0 #58A700; /* الإبقاء على الظل عند الضغط */
-            transform: translateX(-50%) translateY(4px);
-            outline: none;
-        }
+.check-button-shadow {
+    background-color: transparent;
+    color: transparent;
+    border: none;
+    border-radius: 15px;
+    padding: 8px 160px;
+    box-shadow: 0 4px 0 #58A700;
+    position: absolute;
+    z-index: -1; /* يجعل الظل في الخلفية */
+    width: 100%;
+    height: 100%;
+    transition: all 0.1s ease;
+}
 
-        .check-button-active:focus, 
-        .check-button-active:focus-visible {
-            outline: none;
-            box-shadow: 0 4px 0 #58A700; /* الحفاظ على الظل عند التركيز */
-            -webkit-box-shadow: 0 4px 0 #58A700;
-        }
+.check-button-active {
+    background-color: #58CC02;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 8px 160px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.1s ease;
+    outline: none; /* إزالة أي حدود خارجية */
+    white-space: nowrap; /* منع النص من الانتقال إلى سطر جديد */
+    box-shadow: none; /* إزالة أي تأثير ظل */
+    -webkit-tap-highlight-color: transparent; /* إزالة تأثير الضغط على الأجهزة اللمسية */
+    touch-action: manipulation; /* تحسين التفاعل مع اللمس */
+}
+
+.check-button-active:active {
+    transform: translateY(4px);
+    outline: none; /* إزالة أي حدود خارجية عند الضغط */
+}
+
+.check-button-active:focus, 
+.check-button-active:focus-visible {
+    outline: none; /* إزالة أي حدود خارجية عند التركيز */
+    box-shadow: none; /* إزالة أي تأثير ظل عند التركيز */
+}
     </style>
 
     <script>
@@ -191,7 +207,10 @@
                     <div style="text-align: center; padding-top: 20%;">
                         <h1>انت غير متصل بالإنترنت</h1>
                         <p>الرجاء التحقق من اتصالك وحاول مرة أخرى.</p>
-                        <button class="check-button-active" onclick="retryConnection()">إعادة المحاولة</button>
+                        <div class="check-button-container">
+                            <button class="check-button-shadow"></button>
+                            <button class="check-button-active" onclick="retryConnection()">إعادة المحاولة</button>
+                        </div>
                     </div>
                 `;
             }
